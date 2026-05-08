@@ -1,6 +1,7 @@
 ---
 name: dsql-schema-converter
-description: "Aurora DSQL schema conversion guidance, PostgreSQL to DSQL migration best practices, DSQL type mappings, DSQL platform constraints, PL/pgSQL transpilation patterns, DSQL compatibility rules, DSQL DDL requirements, foreign key validation in DSQL, DSQL index async requirements, DSQL sequence CACHE requirements, ENUM to CHECK constraint conversion, OCC retry patterns, data migration batching, identity columns, multi-schema flattening, IAM authentication, collation behavior, function compatibility"
+description: "Convert PostgreSQL schemas to Aurora DSQL-compatible DDL — type mappings, PL/pgSQL transpilation, FK validation functions, index conversion, OCC retry patterns, multi-region design, ORM migration guides. Triggers on phrases like: convert to DSQL, migrate PostgreSQL to DSQL, DSQL schema, DSQL compatibility, PostgreSQL to DSQL, DSQL type mapping, PL/pgSQL to SQL, DSQL foreign key, DSQL index async, DSQL JSONB, DSQL ENUM, DSQL sequence CACHE, DSQL OCC retry, DSQL multi-region, DSQL Django, DSQL Hibernate, DSQL Rails, DSQL ALTER TABLE."
+license: Apache-2.0
 ---
 
 # DSQL Schema Converter — Companion Skill
@@ -10,6 +11,64 @@ description: "Aurora DSQL schema conversion guidance, PostgreSQL to DSQL migrati
 This skill provides conversion knowledge and guidance. For actual schema conversion execution, use the dsql-schema-converter MCP power tools (`convert_schema`, `analyze_compatibility`, `list_type_mappings`, `list_supported_dialects`).
 
 The Power handles execution. The Skill handles knowledge. Together they give Kiro the ability to both explain and act.
+
+## Reference Files
+
+Load these files as needed for detailed guidance:
+
+### [postgresql-type-mappings.md](references/postgresql-type-mappings.md)
+When: ALWAYS load before converting data types or answering type questions
+Contains: Two-stage mapping pipeline (PG → Normalized → DSQL), storage sizes, indexability, NUMERIC defaults, JSON/JSONB behavior, array/INET runtime patterns
+
+### [dsql-constraints.md](references/dsql-constraints.md)
+When: ALWAYS load before recommending schema designs or answering "can DSQL do X?"
+Contains: Transaction limits, schema limits, database object limits, PK design guidance, SELECT FOR UPDATE behavior, roles/IAM, collation, sequence CACHE rules
+
+### [plpgsql-patterns.md](references/plpgsql-patterns.md)
+When: MUST load when converting triggers or PL/pgSQL functions
+Contains: 10 transpilation patterns with before/after code, app-responsibility notes
+
+### [dsql-alter-table-matrix.md](references/dsql-alter-table-matrix.md)
+When: MUST load when user asks about ALTER TABLE, DROP COLUMN, or schema evolution
+Contains: Full support matrix, workaround patterns for unsupported operations
+
+### [dsql-migration-patterns.md](references/dsql-migration-patterns.md)
+When: Load when planning data migration, implementing OCC retry, or wiring FK validation
+Contains: OCC retry code (Python, Node.js), batching strategy, FK enforcement patterns, pre-flight checklist
+
+### [dsql-multi-region.md](references/dsql-multi-region.md)
+When: Load when user asks about multi-region, active-active, or high availability
+Contains: Architecture, setup, performance considerations, geographic partitioning, monitoring
+
+### [dsql-multi-tenant-patterns.md](references/dsql-multi-tenant-patterns.md)
+When: MUST load when converting multi-tenant schemas or when user mentions tenant isolation
+Contains: Isolation strategies, RLS replacement, tenant-scoped FK validation, PK design for multi-tenant, index patterns, application-layer enforcement
+
+### [dsql-function-compatibility.md](references/dsql-function-compatibility.md)
+When: Load when user asks "does function X work in DSQL?" or encounters function errors
+Contains: Full function compatibility matrix (supported, partial, unsupported), maintenance commands, transaction control
+
+### ORM Guides:
+
+#### [orm-django.md](references/orm-django.md)
+When: Load when user is migrating a Django application to DSQL
+Contains: aurora-dsql-django adapter setup, model changes, migration patterns, OCC retry middleware
+
+#### [orm-hibernate.md](references/orm-hibernate.md)
+When: Load when user is migrating a Java/Spring Boot application to DSQL
+Contains: Hibernate dialect, HikariCP config, entity changes, Spring Retry, Liquibase patterns
+
+#### [orm-rails.md](references/orm-rails.md)
+When: Load when user is migrating a Ruby on Rails application to DSQL
+Contains: IAM token initializer, model associations without FK, async indexes, OCC retry concern
+
+### [extending-dialects.md](references/extending-dialects.md)
+When: Load when user asks about adding MySQL, Spanner, or other source dialect support
+Contains: Architecture for adding new dialects, NormalizedType inventory, custom type resolvers
+
+### [REFERENCES.md](references/REFERENCES.md)
+When: Load when verifying source documentation or checking for outdated information
+Contains: All official AWS documentation links mapped to skill files
 
 ## Overview
 
