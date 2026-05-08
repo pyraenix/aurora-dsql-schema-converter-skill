@@ -16,6 +16,12 @@ The Power handles execution. The Skill handles knowledge. Together they give Kir
 
 Load these files as needed for detailed guidance:
 
+### MCP:
+
+#### [mcp-setup.md](mcp/mcp-setup.md)
+When: Load when user asks about automated conversion tools or MCP integration
+Contains: Planned MCP tools (convert_schema, analyze_compatibility), configuration, skill+power architecture
+
 ### [postgresql-type-mappings.md](references/postgresql-type-mappings.md)
 When: ALWAYS load before converting data types or answering type questions
 Contains: Two-stage mapping pipeline (PG → Normalized → DSQL), storage sizes, indexability, NUMERIC defaults, JSON/JSONB behavior, array/INET runtime patterns
